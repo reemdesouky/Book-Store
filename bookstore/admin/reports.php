@@ -14,7 +14,7 @@ require_role('admin');
 
 <h2>System Reports</h2>
 
-<!-- 1️⃣ Total sales last month -->
+<!-- Total sales last month -->
 <h3>Total Sales – Previous Month</h3>
 <?php
 $r = $conn->query("
@@ -28,7 +28,7 @@ echo ($r->fetch_assoc()['total'] ?? 0) . " EGP";
 
 <hr>
 
-<!-- 2️⃣ Sales on specific day -->
+<!--  Sales on specific day -->
 <h3>Total Sales on Specific Day</h3>
 <form method="get">
     <input type="date" name="day" required>
@@ -51,7 +51,7 @@ if (isset($_GET['day'])) {
 
 <hr>
 
-<!-- 3️⃣ Top 5 customers (last 3 months) -->
+<!-- Top 5 customers (last 3 months) -->
 <h3>Top 5 Customers (Last 3 Months)</h3>
 <?php
 $r = $conn->query("
@@ -71,7 +71,7 @@ while ($row = $r->fetch_assoc()) {
 
 <hr>
 
-<!-- 4️⃣ Top 10 selling books -->
+<!--  Top 10 selling books -->
 <h3>Top 10 Selling Books (Last 3 Months)</h3>
 <?php
 $r = $conn->query("
@@ -92,7 +92,7 @@ while ($row = $r->fetch_assoc()) {
 
 <hr>
 
-<!-- 5️⃣ Number of times a book was reordered -->
+<!--  Number of times a book was reordered -->
 <h3>Book Reorder Count</h3>
 
 <form method="get">
