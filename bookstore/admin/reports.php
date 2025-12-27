@@ -20,7 +20,8 @@ require_role('admin');
 $r = $conn->query("
     SELECT SUM(total_price) AS total
     FROM Customer_Order
-    WHERE MONTH(order_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+    WHERE YEAR(order_date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+      AND MONTH(order_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
 ");
 echo ($r->fetch_assoc()['total'] ?? 0) . " EGP";
 ?>
