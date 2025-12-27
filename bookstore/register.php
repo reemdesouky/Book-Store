@@ -6,6 +6,9 @@ $success = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    // Hash the password
+    $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
     $stmt = $conn->prepare(
         "INSERT INTO Customer
         (Fname, Lname, user_name, email, customer_password, customer_address, phone_number)
@@ -18,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_POST['lname'],
         $_POST['username'],
         $_POST['email'],
-        $_POST['password'],
+        $hashedPassword,          
         $_POST['address'],
         $_POST['phone']
     );
@@ -30,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>

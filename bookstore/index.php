@@ -1,32 +1,36 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
-require_once "includes/db.php";
+require_once __DIR__ . "/includes/db.php";
+
 
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
+    $login    = trim($_POST['username']); // username OR email
+    $password = $_POST['password'];
     $role     = $_POST['role'];
 
     if ($role === "admin") {
 
         $stmt = $conn->prepare(
-            "SELECT admin_id, admin_password 
-             FROM Admins 
-             WHERE email = ?"
+            "SELECT admin_id, admin_password
+             FROM Admins
+             WHERE admin_name = ? OR email = ?"
         );
-        $stmt->bind_param("s", $username);
+        $stmt->bind_param("ss", $login, $login);
 
     } else { // customer
 
         $stmt = $conn->prepare(
-            "SELECT customer_id, customer_password 
-             FROM Customer 
-             WHERE user_name = ?"
+            "SELECT customer_id, customer_password
+             FROM Customer
+             WHERE user_name = ? OR email = ?"
         );
-        $stmt->bind_param("s", $username);
+        $stmt->bind_param("ss", $login, $login);
     }
 
     $stmt->execute();
@@ -35,28 +39,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($result->num_rows === 1) {
 
         $row = $result->fetch_assoc();
-        $dbPassword = ($role === "admin")
+        $hashedPassword = ($role === "admin")
             ? $row['admin_password']
             : $row['customer_password'];
 
-        // NOTE: plain-text for now (as you used in schema)
-        if ($password === $dbPassword) {
+        if (password_verify($password, $hashedPassword)) {
 
             $_SESSION['role'] = $role;
             $_SESSION['id']   = ($role === "admin")
                 ? $row['admin_id']
                 : $row['customer_id'];
 
-            if ($role === "admin") {
-                header("Location: admin/dashboard.php");
-            } else {
-                header("Location: customer/home.php");
-            }
+            header(
+                "Location: " .
+                ($role === "admin"
+                    ? "admin/dashboard.php"
+                    : "customer/home.php")
+            );
             exit();
         }
     }
 
-    $error = "Invalid username or password";
+    $error = "Invalid username/email or password";
 }
 ?>
 
@@ -71,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <h2>Login</h2>
 
 <form method="post">
-    <input type="text" name="username" placeholder="Username" required>
+    <input type="text" name="username" placeholder="Username / email" required>
     <input type="password" name="password" placeholder="Password" required>
 
     <select name="role" required>
