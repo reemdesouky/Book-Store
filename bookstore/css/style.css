@@ -1,0 +1,114 @@
+/* ===== Global ===== */
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f4f6f8;
+    color: #333;
+}
+
+/* ===== Header ===== */
+.topbar {
+    background: #1f2937;
+    color: white;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.topbar nav a {
+    color: #e5e7eb;
+    margin-left: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.topbar nav a:hover {
+    color: #ffffff;
+}
+
+.logout {
+    color: #fca5a5 !important;
+}
+
+/* ===== Layout ===== */
+.container {
+    padding: 25px;
+}
+
+/* ===== Forms ===== */
+form {
+    max-width: 450px;
+    background: white;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+form input,
+form select,
+form button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+form button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+form button:hover {
+    background: #1e40af;
+}
+
+/* ===== Tables ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+table th,
+table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background: #f1f5f9;
+    text-align: left;
+}
+
+/* ===== Messages ===== */
+.success {
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.error {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+/* ===== Links ===== */
+a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
