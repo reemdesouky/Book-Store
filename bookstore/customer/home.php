@@ -53,7 +53,9 @@ $books = $conn->query("
 <br>
 <a href="cart.php">View Cart</a> |
 <a href="orders.php">My Orders</a> |
+<a href="edit_profile.php">Edit My Info</a> |
 <a href="../logout.php">Logout</a>
+
 
 </body>
 </html>
